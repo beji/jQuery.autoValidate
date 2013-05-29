@@ -1,6 +1,6 @@
 jQuery.autoValidate
 ===================
-Validates a form with validateForm() and displays error Messages
+Validates a form and displays error messages
 
 Initialisation
 --------------
