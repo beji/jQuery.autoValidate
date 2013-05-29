@@ -32,3 +32,20 @@ jQuery("form.autoValidate").autoValidate({
   generalErrorMessage: "O NOEZ I HAS AN ERROR"
 });
 ```
+
+Preparing the form
+------------------
+After you initialized the validation for the form (and added the corresponding class to the form element) you need to prepare the input elements to be validated. You simply do that by the corresponding *data-validation* attribute. Keep in mind that certain validation types can throw multiple types of errors (but will only throw one at a time)
+Valid values are:
+* radio: Only makes sense on radio buttons, checkes if any radio button with that name is checked
+* string: Checks if the input is not empty.
+* email: 
+  * Checks if the input is not empty
+  * Checks if the input contains a valid e-mail address
+* epost: The same as email, but also throws an error if the email is a epost.de address (you will propably not need this but it is there just in case)
+* checkbox: Only makes sense on checkboxes, checks if that checkbox is checked (e.g. for a "i have totally read the TERMS AND CONDITIONS"-checkbox)
+* number:
+  * Checks if the input is not empty
+  * Checks if the input contains a number
+
+All of the empty-checks can be disabled by adding the class "optional" to the input element
