@@ -16,7 +16,7 @@ jQuery("form.autoValidate").autoValidate();
 to initialize the autoValidation for all forms with the class autoValidate (you can set the name of the class to anything you want obviously). You can pass optional settings with that.
 Avaliable settings:
 * validationMessageAttribute: *String*. The name of the data-attribute that contains the type of output (We will get to that later on), the default is "data-validation"
-* defaultValidationMessageType: *String*. Defines how the error-messages should be displayed if not specified in the forms data-attributes. The default is "alert". Accepted values: "alert", "container"
+* defaultValidationMessageType: *String*. Defines how the error-messages should be displayed if not specified in the forms data-attributes. The default is "container". Accepted values: "alert", "container"
 * validationMessageContainerClass: *String*. Defines the class of a general container that will contain the error messages if you choose "container" as the validation type. The default is "validationMessages"
 * validationCallbackAttribute: *String*. Defines the data-attribute that defines the name of the default callback function. The default is "data-validation-callback"
 * defaultCallbackFunction: *String*. Defines the name of the default callback function. The default is "submit"

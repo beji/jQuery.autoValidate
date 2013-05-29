@@ -250,7 +250,7 @@
 
 		var settings = jQuery.extend({
 			validationMessageAttribute : "data-validation",
-			defaultValidationMessageType : "alert",
+			defaultValidationMessageType : "container",
 			validationMessageContainerClass : "validationMessages",
 			validationCallbackAttribute : "data-validation-callback",
 			defaultCallbackFunction : "submit",
