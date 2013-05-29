@@ -24,6 +24,11 @@ Avaliable settings:
 * addErrorClass: *boolean*. Defines if a class "error" should be added to all input elements (and their label) that generated an error. The default is *true*
 * generalErrorMessage: *String*. A default message that is displayed if no other error message can be found. The default is "Please correct your input" (Yeah, you should propably change that...)
 
+Example:
 ```js
-jQuery("form.autoValidate").autoValidate();
+jQuery("form.autoValidate").autoValidate({
+  addErrorClass: false,
+  defaultCallbackFunction: "customSubmit",
+  generalErrorMessage: "O NOEZ I HAS AN ERROR"
+});
 ```
