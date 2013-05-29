@@ -256,7 +256,7 @@
 			defaultCallbackFunction : "submit",
 			callback : null,
 			addErrorClass : true,
-			generalErrorMessage : localizedStringsForJavaScript["formcheck_validate_general_error"]
+			generalErrorMessage : "Please correct your input"
 		}, settings || {} );	
 		
 		var autoValidateForm = function(){
