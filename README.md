@@ -49,3 +49,10 @@ Valid values are:
   * Checks if the input contains a number
 
 All of the empty-checks can be disabled by adding the class "optional" to the input element
+
+Example:
+```html
+<input data-validation="email" type="text" name="email" value="" />
+<input data-validation="string" type="text" name="name" value="" />
+<input data-validation="number" type="text" name="age" value="" />
+```
