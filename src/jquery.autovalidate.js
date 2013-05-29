@@ -10,15 +10,15 @@
 	
 	Example:
 	------------
-	<form id="newsletterraffleform" name="newsletter" action="#urlex('http','',action('BV_ViewNewsletter-UpdateNoaEmailAdress'))#" 
+	<form id="newsletterraffleform" name="newsletter" action="http://submit.me" 
 		method="post" onSubmit="return check();">
 		<input id="EMAIL" data-validation="epost" type="text" name="EMAIL" value="">
 	</form>
 	<script>
 		function check(){
 			var currentForm = document.newsletter;
-			var inlineErrorMessageObj = jQuery("#'#'#inlineErrorMessages");
-			var errorJson = validateForm(jQuery("#'#'#newsletterraffleform"));
+			var inlineErrorMessageObj = jQuery("#inlineErrorMessages");
+			var errorJson = validateForm(jQuery("#newsletterraffleform"));
 			
 			if(typeof errorJson.EMAIL !== "undefined"){
 				if(errorJson.EMAIL.error === "epost"){
@@ -211,26 +211,26 @@
 	 * 
 	 * Example / default:
 	 * ------------------
-	 * <form name="recommend" method="post" class="validateForm" action="#URL(Action('BV_SendMail-RecommendLayerWithCalc'))#">
+	 * <form name="recommend" method="post" class="validateForm" action="http://submit.me">
 	 * Throws settings.generalErrorMessage in an alert(), adds error class to the inputs, calls submit() after validation if defined
 	 * 
 	 * Example / no error classes:
 	 * ------------------
-	 * <form name="recommend" method="post" class="validateForm noErrorClass" action="#URL(Action('BV_SendMail-RecommendLayerWithCalc'))#">
+	 * <form name="recommend" method="post" class="validateForm noErrorClass" action="http://submit.me">
 	 * OR jQuery(".formDesigner").formDesigner({addErrorClass : false});
 	 * 
 	 * Example / display error in container:
 	 * ------------------
-	 * <form name="recommend" method="post" class="validateForm" data-validation="container" action="#URL(Action('BV_SendMail-RecommendLayerWithCalc'))#">
+	 * <form name="recommend" method="post" class="validateForm" data-validation="container" action="http://submit.me">
 	 * 
 	 * Example / custom callback:
 	 * ------------------
-	 * <form name="recommend" method="post" class="validateForm" data-validation-callback="customFunction" action="#URL(Action('BV_SendMail-RecommendLayerWithCalc'))#">
+	 * <form name="recommend" method="post" class="validateForm" data-validation-callback="customFunction" action="http://submit.me">
 	 * OR jQuery(".formDesigner").formDesigner({ callback : function(){...} });
 	 * 
 	 * Example / one container per element:
 	 * ------------------
-	 * <form name="recommend" method="post" class="validateForm" data-validation="container" action="#URL(Action('BV_SendMail-RecommendLayerWithCalc'))#">
+	 * <form name="recommend" method="post" class="validateForm" data-validation="container" action="http://submit.me">
 	 * <input data-validation="epost" type="text" name="EMAIL" value="">
 	 * <div class="customErrorContainer" data-for="EMAIL">I am a special error message</div> 
 	 *  */
