@@ -1,3 +1,15 @@
+/*!
+ * Simple_ajax_templates.js
+ * https://github.com/beji/jQuery.autoValidate
+ *
+ * Requires jQuery
+ * http://jquery.com/
+ *
+ * Copyright 2013 Bjoern Erlwein
+ * Released under the MIT license
+ *
+ */
+
 ;(function(jQuery){
 	
 	/*
