@@ -54,5 +54,5 @@ Example:
 ```html
 <input data-validation="email" type="text" name="email" value="" />
 <input data-validation="string" type="text" name="name" value="" />
-<input data-validation="number" type="text" name="age" value="" />
+<input data-validation="number" type="text" name="age" class="optional" value="" />
 ```
