@@ -41,13 +41,13 @@ Valid values are:
 * radio: Only makes sense on radio buttons, checkes if any radio button with that name is checked
 * string: Checks if the input is not empty.
 * email: 
-  * Checks if the input is not empty
-  * Checks if the input contains a valid e-mail address
-* epost: The same as email, but also throws an error if the email is a epost.de address (you will propably not need this but it is there just in case)
+  * Checks if the input is not empty. Errorcode: "empty"
+  * Checks if the input contains a valid e-mail address. Errorcode: "invalid"
+* epost: The same as email, but also throws an error if the email is a epost.de address (you will propably not need this but it is there just in case). Errorcode: "epost"
 * checkbox: Only makes sense on checkboxes, checks if that checkbox is checked (e.g. for a "i have totally read the TERMS AND CONDITIONS"-checkbox)
 * number:
-  * Checks if the input is not empty
-  * Checks if the input contains a number
+  * Checks if the input is not empty. Errorcode: "empty"
+  * Checks if the input contains a number. Errorcode: "not a number"
 
 All of the empty-checks can be disabled by adding the class "optional" to the input element
 
