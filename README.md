@@ -15,9 +15,14 @@ jQuery("form.autoValidate").autoValidate();
 ```
 to initialize the autoValidation for all forms with the class autoValidate (you can set the name of the class to anything you want obviously). You can pass optional settings with that.
 Avaliable settings:
-* validationMessageAttribute: String. The name of the data-attribute that contains the type of output (We will get to that later on), the default is "data-validation"
-* defaultValidationMessageType: String. Defines how the error-messages should be displayed if not specified in the forms data-attributes. The default is "alert"
-* validationMessageContainerClass: String.
+* validationMessageAttribute: *String*. The name of the data-attribute that contains the type of output (We will get to that later on), the default is "data-validation"
+* defaultValidationMessageType: *String*. Defines how the error-messages should be displayed if not specified in the forms data-attributes. The default is "alert". Accepted values: "alert", "container"
+* validationMessageContainerClass: *String*. Defines the class of a general container that will contain the error messages if you choose "container" as the validation type. The default is "validationMessages"
+* validationCallbackAttribute: *String*. Defines the data-attribute that defines the name of the default callback function. The default is "data-validation-callback"
+* defaultCallbackFunction: *String*. Defines the name of the default callback function. The default is "submit"
+* callback: *function*. If you want to pass the callback function directly to the initialization, you can do so here. The default is *null*
+* addErrorClass: *boolean*. Defines if a class "error" should be added to all input elements (and their label) that generated an error. The default is *true*
+* generalErrorMessage: *String*. A default message that is displayed if no other error message can be found. The default is "Please correct your input" (Yeah, you should propably change that...)
 
 ```js
 jQuery("form.autoValidate").autoValidate();
