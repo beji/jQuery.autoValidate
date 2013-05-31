@@ -137,7 +137,7 @@
         };
 
         validateEmail = function(item) {
-            var reg = /^[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*(\.([a-zA-Z]) {2,4})$/;
+            var reg = /^[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*(\.([a-zA-Z]){2,4})$/;
             if (item.val().trim() === "" && !item.hasClass("optional")) {
                 addInvalidElement(item.attr("name"), "input_email", "empty");
                 return false;
