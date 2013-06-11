@@ -112,8 +112,8 @@
     var FormValidator = function () {
         this.returnJson = {};
         this.validations = {};
-    };
-    
+    }, formValidator;
+
     FormValidator.prototype.addValidation = function(name, validationCode) {
         if (typeof validationCode === "function") {
             this.validations[name] = validationCode;
@@ -121,20 +121,20 @@
         name = name.charAt(0).toUpperCase() + name.slice(1);
         this["validate" + name] = validationCode;
     };
-    
+
     FormValidator.prototype.addInvalidElement = function(name, checktype, errortype) {
         this.returnJson[name] = {"type" : checktype, "error" : errortype};
     };
-    
+
     FormValidator.prototype.isValidation = function(name) {
         name = name.charAt(0).toUpperCase() + name.slice(1);
         return (typeof this["validate" + name] === "function");
     };
-    
+
     FormValidator.prototype.validate = function(formObject) {
-        var validationLoop;
+        var validationLoop, _this;
         this.returnJson = {};
-        var _this = this;
+        _this = this;
         validationLoop = function(loopObject) {
             var validationType;
 
@@ -146,7 +146,7 @@
                 }
 
                 validationType = element.attr("data-validation");
-                
+
                 if (validationType !== undefined && _this.isValidation(validationType)) {
                     console.log("THis exists!!! " + validationType);
                     validationType = validationType.charAt(0).toUpperCase() + validationType.slice(1);
@@ -156,31 +156,31 @@
         };
 
         validationLoop(formObject);
-        
+
         return this.returnJson;
     };
-    
-    var formValidator = new FormValidator();
-    
 
-    formValidator.addValidation("radio", function(item){
+    formValidator = new FormValidator();
+
+
+    formValidator.addValidation("radio", function(item) {
         var name = item.attr("name");
         if (!(jQuery("input:radio[name='" + name + "']").is(":checked"))) {
             this.addInvalidElement(name, "radio", "unchecked");
             return false;
         }
-        return true;        
+        return true;
     });
-    
-    formValidator.addValidation("string", function(item){
+
+    formValidator.addValidation("string", function(item) {
         if (item.val().trim() === "") {
             this.addInvalidElement(item.attr("name"), "input_string", "empty");
             return false;
         }
         return true;
     });
-    
-    formValidator.addValidation("email", function(item){
+
+    formValidator.addValidation("email", function(item) {
         var reg = /^[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*(\.([a-zA-Z]){2,4})$/;
         if (item.val().trim() === "" && !item.hasClass("optional")) {
             this.addInvalidElement(item.attr("name"), "input_email", "empty");
@@ -192,8 +192,8 @@
         }
         return true;
     });
-    
-    formValidator.addValidation("epost", function(item){
+
+    formValidator.addValidation("epost", function(item) {
         var epostReg = /@epost\.de$/;
         this.validateEmail(item);
         if (epostReg.exec(item.val().toLowerCase())) {
@@ -202,16 +202,16 @@
         }
         return true;
     });
-    
-    formValidator.addValidation("checkbox", function(item){
+
+    formValidator.addValidation("checkbox", function(item) {
         if (!(item.is(':checked'))) {
             this.addInvalidElement(item.attr("name"), "checkbox", "unchecked");
             return false;
         }
         return true;
     });
-    
-    formValidator.addValidation("number", function(item){
+
+    formValidator.addValidation("number", function(item) {
         if (item.val().trim() === "" && !item.hasClass("optional")) {
             this.addInvalidElement(item.attr("name"), "input_number", "empty");
             return false;
@@ -221,8 +221,8 @@
             return false;
         }
         return true;
-    });    
-    
+    });
+
     window.formValidator = formValidator;
 
     /* Validates a form with validateForm() and displays error Messages
