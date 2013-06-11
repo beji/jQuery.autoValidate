@@ -15,6 +15,7 @@
     "use strict";
 
     /*
+    TODO: Update description
     This function can be called to somewhat standardize the pre-submit formchecks instead of copy-pasting them everytime.
     This will NOT display error-Messages or do any form of error-handling at all, it simply checks for errors.
     To check a form you add the data-validation attribute to the elements you want to check. 
@@ -32,7 +33,7 @@
         function check() {
             var currentForm = document.newsletter;
             var inlineErrorMessageObj = jQuery("#inlineErrorMessages");
-            var errorJson = validateForm(jQuery("#newsletterraffleform"));
+            var errorJson = formValidator.validate(jQuery("#newsletterraffleform"));
             
             if (typeof errorJson.EMAIL !== "undefined") {
                 if (errorJson.EMAIL.error === "epost") {
@@ -108,77 +109,32 @@
                 empty
                 "not a number"
     */
-    var validateForm = function(formObject) {
-
-        var returnJson, addInvalidElement, validateRadio, validateString, validateEmail, validateEpost, validateCheckbox, validateNumber, validationLoop;
-
-        returnJson = {};
-
-        addInvalidElement = function(name, checktype, errortype) {
-            returnJson[name] = {"type" : checktype, "error" : errortype};
-        };
-
-        validateRadio = function(item) {
-            var name = item.attr("name");
-            if (!(jQuery("input:radio[name='" + name + "']").is(":checked"))) {
-                addInvalidElement(name, "radio", "unchecked");
-                return false;
-            }
-            return true;
-        };
-
-        validateString = function(item) {
-
-            if (item.val().trim() === "") {
-                addInvalidElement(item.attr("name"), "input_string", "empty");
-                return false;
-            }
-            return true;
-        };
-
-        validateEmail = function(item) {
-            var reg = /^[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*(\.([a-zA-Z]){2,4})$/;
-            if (item.val().trim() === "" && !item.hasClass("optional")) {
-                addInvalidElement(item.attr("name"), "input_email", "empty");
-                return false;
-            }
-            if (!reg.exec(item.val()) && item.val().trim() !== "") {
-                addInvalidElement(item.attr("name"), "input_email", "invalid");
-                return false;
-            }
-            return true;
-        };
-
-        validateEpost = function(item) {
-            var epostReg = /@epost\.de$/;
-            validateEmail(item);
-            if (epostReg.exec(item.val().toLowerCase())) {
-                addInvalidElement(item.attr("name"), "input_email", "epost");
-                return false;
-            }
-            return true;
-        };
-
-        validateCheckbox = function(item) {
-            if (!(item.is(':checked'))) {
-                addInvalidElement(item.attr("name"), "checkbox", "unchecked");
-                return false;
-            }
-            return true;
-        };
-
-        validateNumber = function (val) {
-            if (item.val().trim() === "" && !item.hasClass("optional")) {
-                addInvalidElement(item.attr("name"), "input_number", "empty");
-                return false;
-            }
-            if (isNaN(item.val()) && item.val().trim() !== "") {
-                addInvalidElement(item.attr("name"), "input_number", "not a number");
-                return false;
-            }
-            return true;
-        };
-
+    var FormValidator = function () {
+        this.returnJson = {};
+        this.validations = {};
+    };
+    
+    FormValidator.prototype.addValidation = function(name, validationCode) {
+        if (typeof validationCode === "function") {
+            this.validations[name] = validationCode;
+        }
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+        this["validate" + name] = validationCode;
+    };
+    
+    FormValidator.prototype.addInvalidElement = function(name, checktype, errortype) {
+        this.returnJson[name] = {"type" : checktype, "error" : errortype};
+    };
+    
+    FormValidator.prototype.isValidation = function(name) {
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+        return (typeof this["validate" + name] === "function");
+    };
+    
+    FormValidator.prototype.validate = function(formObject) {
+        var validationLoop;
+        this.returnJson = {};
+        var _this = this;
         validationLoop = function(loopObject) {
             var validationType;
 
@@ -190,38 +146,84 @@
                 }
 
                 validationType = element.attr("data-validation");
-
-                if (validationType !== undefined) {
-
-                    if (validationType === "radio") {
-                        validateRadio(element);
-                    }
-                    if (validationType === "string") {
-                        validateString(element);
-                    }
-                    if (validationType === "email") {
-                        validateEmail(element);
-                    }
-
-                    if (validationType === "epost") {
-                        validateEpost(element);
-                    }
-
-                    if (validationType === "checkbox") {
-                        validateCheckbox(element);
-                    }
-                    if (validationType === "number") {
-                        validateNumber(element);
-                    }
-
+                
+                if (validationType !== undefined && _this.isValidation(validationType)) {
+                    console.log("THis exists!!! " + validationType);
+                    validationType = validationType.charAt(0).toUpperCase() + validationType.slice(1);
+                    _this["validate" + validationType](element);
                 }
             });
         };
 
         validationLoop(formObject);
-
-        return returnJson;
+        
+        return this.returnJson;
     };
+    
+    var formValidator = new FormValidator();
+    
+
+    formValidator.addValidation("radio", function(item){
+        var name = item.attr("name");
+        if (!(jQuery("input:radio[name='" + name + "']").is(":checked"))) {
+            this.addInvalidElement(name, "radio", "unchecked");
+            return false;
+        }
+        return true;        
+    });
+    
+    formValidator.addValidation("string", function(item){
+        if (item.val().trim() === "") {
+            this.addInvalidElement(item.attr("name"), "input_string", "empty");
+            return false;
+        }
+        return true;
+    });
+    
+    formValidator.addValidation("email", function(item){
+        var reg = /^[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*(\.([a-zA-Z]){2,4})$/;
+        if (item.val().trim() === "" && !item.hasClass("optional")) {
+            this.addInvalidElement(item.attr("name"), "input_email", "empty");
+            return false;
+        }
+        if (!reg.exec(item.val()) && item.val().trim() !== "") {
+            this.addInvalidElement(item.attr("name"), "input_email", "invalid");
+            return false;
+        }
+        return true;
+    });
+    
+    formValidator.addValidation("epost", function(item){
+        var epostReg = /@epost\.de$/;
+        this.validateEmail(item);
+        if (epostReg.exec(item.val().toLowerCase())) {
+            this.addInvalidElement(item.attr("name"), "input_email", "epost");
+            return false;
+        }
+        return true;
+    });
+    
+    formValidator.addValidation("checkbox", function(item){
+        if (!(item.is(':checked'))) {
+            this.addInvalidElement(item.attr("name"), "checkbox", "unchecked");
+            return false;
+        }
+        return true;
+    });
+    
+    formValidator.addValidation("number", function(item){
+        if (item.val().trim() === "" && !item.hasClass("optional")) {
+            this.addInvalidElement(item.attr("name"), "input_number", "empty");
+            return false;
+        }
+        if (isNaN(item.val()) && item.val().trim() !== "") {
+            this.addInvalidElement(item.attr("name"), "input_number", "not a number");
+            return false;
+        }
+        return true;
+    });    
+    
+    window.formValidator = formValidator;
 
     /* Validates a form with validateForm() and displays error Messages
      * The inputs require the correct data-validation attributes to be validated, see validateForm()
@@ -272,7 +274,7 @@
             if (formObject.hasClass("noErrorClass")) {
                 settings.addErrorClass = false;
             }
-            errorJson = validateForm(formObject);
+            errorJson = formValidator.validate(formObject);
 
 
             validationMessageType = formObject.attr(settings.validationMessageAttribute) || settings.defaultValidationMessageType;
@@ -354,5 +356,4 @@
         /* Maintain chainability of jQuery by returning the object */
         return this;
     };
-    window.validateForm = validateForm;
 }(jQuery));
