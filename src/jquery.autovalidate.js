@@ -15,13 +15,12 @@
     "use strict";
 
     /*
-    TODO: Update description
-    This function can be called to somewhat standardize the pre-submit formchecks instead of copy-pasting them everytime.
-    This will NOT display error-Messages or do any form of error-handling at all, it simply checks for errors.
-    To check a form you add the data-validation attribute to the elements you want to check. 
-    You then call validateForm() in a function that is called on the submit-Event, e.g. with onSubmit="return check();" 
-    validateForm expects the form to be passed as a jQuery object, e.g. validateForm(jQuery("#newsletterraffleform"))
-    This will then return a JSON containing the failed validations, if everything went well the JSON will be empty.
+    The FormValidator can be used to validate a form without the error handling included within jQuery.fn.autoValidate. 
+    The object formValidator is created and filled with some default validation options by default. You can add your own custom validations by usign the addValidation function.
+    See the code below for examples on that. You can also execute a specific validation on an object by calling the custom functions created by addValidation.
+    e.g. adding a validation called "fullName" would create a function called validateFullName (notice that the first letter of the name is automatically capitalized).
+    If that doesn't suit you you can access the current validations through formValidator.validations object
+
     
     Example:
     ------------
@@ -148,7 +147,6 @@
                 validationType = element.attr("data-validation");
 
                 if (validationType !== undefined && _this.isValidation(validationType)) {
-                    console.log("THis exists!!! " + validationType);
                     validationType = validationType.charAt(0).toUpperCase() + validationType.slice(1);
                     _this["validate" + validationType](element);
                 }
@@ -162,7 +160,7 @@
 
     formValidator = new FormValidator();
 
-
+    //item is a jQuery object, e.g. jQuery(".testobject")
     formValidator.addValidation("radio", function(item) {
         var name = item.attr("name");
         if (!(jQuery("input:radio[name='" + name + "']").is(":checked"))) {
@@ -224,6 +222,15 @@
     });
 
     window.formValidator = formValidator;
+
+    /**
+     * Kept for compatibility
+     *
+     * @deprecated  use formValidator.validate(formObject) instead
+     */
+    window.validateForm = function(formObject){
+        return formValidator.validate(formObject);
+    }
 
     /* Validates a form with validateForm() and displays error Messages
      * The inputs require the correct data-validation attributes to be validated, see validateForm()
