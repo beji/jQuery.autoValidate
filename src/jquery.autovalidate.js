@@ -220,14 +220,14 @@
             return true;
         });
 
-        window.formValidator = formValidator;
+        global.formValidator = formValidator;
 
         /**
          * Kept for compatibility
          *
          * @deprecated  use formValidator.validate(formObject) instead
          */
-        window.validateForm = function(formObject){
+        global.validateForm = function(formObject){
             return formValidator.validate(formObject);
         }
 
@@ -344,7 +344,7 @@
                 callBack = formObject.attr(settings.validationCallbackAttribute) || settings.defaultCallbackFunction;
 
                 /* Is there a valid callback function? */
-                callBackFunction = settings.callback || window[callBack];
+                callBackFunction = settings.callback || global[callBack];
                 if (typeof callBackFunction === "function") {
                     /* By using the return of the callback the form can use the standard submit or prevent it simply by returning true or false */
                     returnVal = callBackFunction();
