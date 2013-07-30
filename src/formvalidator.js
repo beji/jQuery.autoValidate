@@ -111,7 +111,7 @@ data-validation="number":
     "use strict";
     var FormValidator = (function (jQuery) {
 
-        FormValidator = function () {
+        var FormValidator = function () {
             this.returnJson = {};
             this.validations = {};
         };
@@ -177,7 +177,7 @@ data-validation="number":
     });
 
     formValidator.addValidation("string", function(item) {
-        if (item.val().trim() === "") {
+        if (jQuery.trim(item.val()) === "") {
             this.addInvalidElement(item.attr("name"), "input_string", "empty");
             return false;
         }
@@ -186,11 +186,11 @@ data-validation="number":
 
     formValidator.addValidation("email", function(item) {
         var reg = /^[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*(\.([a-zA-Z]){2,4})$/;
-        if (item.val().trim() === "" && !item.hasClass("optional")) {
+        if (jQuery.trim(item.val()) === "" && !item.hasClass("optional")) {
             this.addInvalidElement(item.attr("name"), "input_email", "empty");
             return false;
         }
-        if (!reg.exec(item.val()) && item.val().trim() !== "") {
+        if (!reg.exec(item.val()) && jQuery.trim(item.val()) !== "") {
             this.addInvalidElement(item.attr("name"), "input_email", "invalid");
             return false;
         }
@@ -216,11 +216,11 @@ data-validation="number":
     });
 
     formValidator.addValidation("number", function(item) {
-        if (item.val().trim() === "" && !item.hasClass("optional")) {
+        if (jQuery.trim(item.val()) === "" && !item.hasClass("optional")) {
             this.addInvalidElement(item.attr("name"), "input_number", "empty");
             return false;
         }
-        if (isNaN(item.val()) && item.val().trim() !== "") {
+        if (isNaN(item.val()) && jQuery.trim(item.val()) !== "") {
             this.addInvalidElement(item.attr("name"), "input_number", "not a number");
             return false;
         }
@@ -228,7 +228,7 @@ data-validation="number":
     });
 
     if (typeof define === 'function' && define.amd) {
-        define(['jquery',], formValidator);
+        define(['jquery'], formValidator);
     } else {
         global.formValidator = formValidator;
 
