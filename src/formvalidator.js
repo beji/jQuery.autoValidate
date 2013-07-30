@@ -8,7 +8,10 @@
  * Copyright 2013 Bjoern Erlwein
  * Released under the MIT license
  *
+ */
 
+
+/*
 The FormValidator can be used to validate a form without the error handling included within jQuery.fn.autoValidate. 
 The object formValidator is created and filled with some default validation options by default. You can add your own custom validations by usign the addValidation function.
 See the code below for examples on that. You can also execute a specific validation on an object by calling the custom functions created by addValidation.

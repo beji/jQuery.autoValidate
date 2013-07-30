@@ -8,6 +8,10 @@
  * Copyright 2013 Bjoern Erlwein
  * Released under the MIT license
  *
+ */
+
+
+/*
  * Validates a form with validateForm() and displays error Messages
  * The inputs require the correct data-validation attributes to be validated, see validateForm()
  * 
