@@ -208,7 +208,8 @@ data-validation="number":
     });
 
     formValidator.addValidation("checkbox", function(item) {
-        if (!(item.is(':checked'))) {
+        var name = item.attr("name");
+        if (!(jQuery("[name='" + name + "']").is(':checked'))) {
             this.addInvalidElement(item.attr("name"), "checkbox", "unchecked");
             return false;
         }
