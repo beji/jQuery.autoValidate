@@ -5,7 +5,7 @@ jQuery.autoValidate is a library that offers automatic validation (and the displ
 Initialisation
 --------------
 
-To get started include the script somewhere in your code. Make shure it is loaded after jQuery sice it's a dependency
+To get started include the script somewhere in your code. Make sure it is loaded after jQuery sice it's a dependency
 ```html
 <script src="path/to/the/script/jquery.autovalidate.js" type="text/javascript"></script>
 ```
